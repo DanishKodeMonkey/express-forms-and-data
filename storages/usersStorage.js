@@ -8,7 +8,7 @@ class usersStorage {
     }
 
     /* addUser method accepting 2 parameters */
-    addUser({ firstName, lastName }) {
+    addUser({ firstName, lastName, email, age, bio }) {
         /* pass current iteration of id to function id */
         const id = this.id;
         /* pass data, and function id to storage object */
@@ -27,7 +27,7 @@ class usersStorage {
         return this.storage[id];
     }
 
-    updateUser(id, { firstName, lastName }) {
+    updateUser(id, { firstName, lastName, email, age, bio }) {
         /* replace storage object with matching id with new data */
         this.storage[id] = { id, firstName, lastName, email, age, bio };
     }

@@ -16,7 +16,8 @@
             <li>
                 <!-- output recorded data -->
                 ID: <%= user.id %>, Name: <%= user.firstName %> <%=
-                user.lastName %>
+                user.lastName %>, Email: <%= user.email %>, Age: <%= user.age
+                %>, Bio <%= user.bio %>
                 <!-- Link to user update page, passing user.id -->
                 <a href="/<%= user.id %>/update">Update</a>
                 <!-- Button for deleting user, returns confirmation before submitting using form action -->
