@@ -92,3 +92,9 @@ exports.usersUpdatePost = [
         res.redirect('/');
     },
 ];
+
+/* calls pseudo database delete user method, sweet and simple */
+exports.userDeletePost = (req, res) => {
+    usersStorage.deleteUser(req.params.id);
+    res.redirect('/');
+};

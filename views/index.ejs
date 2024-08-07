@@ -19,6 +19,19 @@
                 user.lastName %>
                 <!-- Link to user update page, passing user.id -->
                 <a href="/<%= user.id %>/update">Update</a>
+                <!-- Button for deleting user, returns confirmation before submitting using form action -->
+                <form
+                    action="/<%= user.id %>/delete"
+                    method="POST"
+                    style="display: inline"
+                >
+                    <button
+                        type="submit"
+                        onclick="return confirm('Are you sure? This cannot be reversed.')"
+                    >
+                        Delete
+                    </button>
+                </form>
             </li>
             <% }); %> <% } %>
         </ul>

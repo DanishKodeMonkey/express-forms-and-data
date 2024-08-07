@@ -10,7 +10,9 @@ usersRouter.get('/create', usersController.usersCreateGet);
 usersRouter.post('/create', usersController.usersCreatePost);
 
 /* update */
-usersRouter.get('/update', usersController.usersUpdateGet);
-usersRouter.post('/update', usersController.usersUpdatePost);
+usersRouter.get('/:id/update', usersController.usersUpdateGet);
+usersRouter.post('/:id/update', usersController.usersUpdatePost);
 
+/* delete */
+usersRouter.post('/:id/delete');
 module.exports = usersRouter;
