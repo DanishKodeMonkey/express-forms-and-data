@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <!-- Errors partial if any errors exust -->
+        <%- include("partials/errors.ejs") %>
+        <form
+            action="/create"
+            method="POST"
+        >
+            <label for="firstName">First name:</label>
+            <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                required
+            />
+            <label for="lastName">Last name:</label>
+            <input
+                type="text"
+                name="lastName"
+                id="lastName"
+            />
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/">Back to home</a>
+    </body>
+</html>

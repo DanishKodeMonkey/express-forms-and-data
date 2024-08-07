@@ -1,0 +1,12 @@
+<!-- View responsible for displaying errors -->
+
+<!-- If any errors exist in locals object -->
+<% if(locals.errors) { %>
+<ul>
+    <!-- Render a list item for each error -->
+    <% errors.forEach(function(error){ %>
+    <!-- containing the error message -->
+    <li><%= error.msg %></li>
+    <% }) %>
+</ul>
+<% } %>

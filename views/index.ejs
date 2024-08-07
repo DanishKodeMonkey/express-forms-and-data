@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <!-- Render a list object in unorganised list for each user -->
+        <ul>
+            <% if (locals.users) {%> <% users.forEach(user => { %>
+            <li>
+                <!-- output recorded data -->
+                ID: <%= user.id %>, Name: <%= user.firstName %> <%=
+                user.lastName %>
+                <!-- Link to user update page, passing user.id -->
+                <a href="/<%= user.id %>/update">Update</a>
+            </li>
+            <% }); %> <% } %>
+        </ul>
+        <!-- Link for new users -->
+        <a href="/create">Create new user</a>
+    </body>
+</html>

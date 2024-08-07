@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <%- include('partials/errors.ejs') %>
+        <!-- Dynamically include user.id in action path -->
+        <form
+            action="/<%= user.id %>/update"
+            method="POST"
+        >
+        <label for="firstName">First name:</label>
+        <!-- Include user firstname and last name dynamically in value field to auto fill existing data -->
+        <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            
+            value="<%= user.firstName %>"
+            required
+        />
+        <label for="lastName">Last name:</label>
+        <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            value="<%= user.lastName %>"
+        />
+        <button type="submit">Update user</button>
+    </form>
+    <a href="/">Back to home</a>
+    </form>
+    </body>
+</html>
