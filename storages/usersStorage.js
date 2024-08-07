@@ -12,7 +12,7 @@ class usersStorage {
         /* pass current iteration of id to function id */
         const id = this.id;
         /* pass data, and function id to storage object */
-        this.storage[id] = { id, firstName, lastName, email };
+        this.storage[id] = { id, firstName, lastName, email, age, bio };
         /* itterate object */
         this.id++;
     }
@@ -29,7 +29,7 @@ class usersStorage {
 
     updateUser(id, { firstName, lastName }) {
         /* replace storage object with matching id with new data */
-        this.storage[id] = { id, firstName, lastName, email };
+        this.storage[id] = { id, firstName, lastName, email, age, bio };
     }
 
     deleteUser(id) {

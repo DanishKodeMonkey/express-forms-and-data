@@ -4,6 +4,9 @@ const { body, validationResult } = require('express-validator');
 // error messages for easy parsing, can be configured here
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 1 and 10 characters.';
+const emailErr = 'Must be an email';
+const ageErr = 'Must be a number between 18 and 200';
+const bioErr = 'Must be below 200 characters';
 
 // validation block centered here.
 const validateUser = [
@@ -16,13 +19,24 @@ const validateUser = [
         .withMessage(`First name ${alphaErr}`)
         .isLength({ min: 1, max: 10 })
         .withMessage(`First name ${lengthErr}`),
-    body('lastname')
+    body('lastName')
         .trim()
         .isAlpha()
         .withMessage(`Last name ${alphaErr}`)
         .isLength({ min: 1, max: 10 })
         .withMessage(`Last name ${lengthErr}`),
-    body('email').trim().isEmail().withMessage('Must be an email'),
+    body('email').trim().isEmail().withMessage(`Email ${emailErr}`),
+    body('age')
+        .optional()
+        .trim()
+        .toInt()
+        .isInt({ min: 18, max: 200 })
+        .withMessage(`Age ${ageErr}`),
+    body('bio')
+        .optional()
+        .trim()
+        .isLength({ max: 200 })
+        .withMessage(`Bio ${bioErr}`),
 ];
 
 exports.usersListGet = (req, res) => {
@@ -57,9 +71,9 @@ exports.usersCreatePost = [
         }
         // otherwise, proceed
         // deconstruct validated request body for elements of our user
-        const { firstName, lastName } = req.body;
+        const { firstName, lastName, email, age, bio } = req.body;
         // call userStorage adduser method, pass our data (see userStorage).
-        usersStorage.addUser({ firstName, lastName, email });
+        usersStorage.addUser({ firstName, lastName, email, age, bio });
         // Return to index.
         res.redirect('/');
     },
@@ -88,8 +102,14 @@ exports.usersUpdatePost = [
                 errors: errors.array(),
             });
         }
-        const { firstName, lastName } = req.body;
-        usersStorage.updateUser(req.params.id, { firstName, lastName, email });
+        const { firstName, lastName, email, age, bio } = req.body;
+        usersStorage.updateUser(req.params.id, {
+            firstName,
+            lastName,
+            email,
+            age,
+            bio,
+        });
         res.redirect('/');
     },
 ];

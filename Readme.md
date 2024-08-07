@@ -4,8 +4,6 @@ This is a basic Express.js application designed to demonstrate how to handle dat
 
 This is not intended to be a thorough guide, but rather the purpose of this is being a breakdown and reference for an initial express setup.
 
-
-
 # Dependencies
 
 -   ["express"](http://expressjs.com/): a minimal and flexible Node.js web application framework
@@ -78,7 +76,7 @@ class usersStorage {
 
     addUser({ firstName, lastName }) {
         const id = this.id;
-        this.storage[id] = { id, firstName, lastName };
+        this.storage[id] = { id, firstName, lastName, email, age, bio };
         this.id++;
     }
 
@@ -91,7 +89,7 @@ class usersStorage {
     }
 
     updateUser(id, { firstName, lastName }) {
-        this.storage[id] = { id, firstName, lastName };
+        this.storage[id] = { id, firstName, lastName, email, age, bio };
     }
 
     deleteUser(id) {
@@ -133,6 +131,9 @@ const { body, validationResult } = require('express-validator');
 
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 1 and 10 characters.';
+const emailErr = 'Must be an email';
+const ageErr = 'Must be a number between 18 and 200';
+const bioErr = 'Must be below 200 characters';
 
 const validateUser = [
     body('firstName')
@@ -147,11 +148,24 @@ const validateUser = [
         .withMessage(`Last name ${alphaErr}`)
         .isLength({ min: 1, max: 10 })
         .withMessage(`Last name ${lengthErr}`),
+    body('email').trim().isEmail().withMessage(`Email ${emailErr}`),
+    body('age')
+        .optional()
+        .trim()
+        .toInt()
+        .isInt({ min: 18, max: 200 })
+        .withMessage(`Age ${ageErr}`),
+    body('bio')
+        .optional()
+        .trim()
+        .isLength({ max: 200 })
+        .withMessage(`Bio ${bioErr}`),
 ];
 
 exports.usersListGet = (req, res) => {
     res.render('index', {
         title: 'User list',
+
         users: usersStorage.getUsers(),
     });
 };
@@ -166,14 +180,18 @@ exports.usersCreatePost = [
     validateUser,
     (req, res) => {
         const errors = validationResult(req);
+
         if (!errors.isEmpty()) {
             return res.status(400).render('createUser', {
                 title: 'Create user',
                 errors: errors.array(),
             });
         }
-        const { firstName, lastName } = req.body;
-        usersStorage.addUser({ firstName, lastName });
+
+        const { firstName, lastName, email, age, bio } = req.body;
+
+        usersStorage.addUser({ firstName, lastName, email, age, bio });
+
         res.redirect('/');
     },
 ];
@@ -198,8 +216,14 @@ exports.usersUpdatePost = [
                 errors: errors.array(),
             });
         }
-        const { firstName, lastName } = req.body;
-        usersStorage.updateUser(req.params.id, { firstName, lastName });
+        const { firstName, lastName, email, age, bio } = req.body;
+        usersStorage.updateUser(req.params.id, {
+            firstName,
+            lastName,
+            email,
+            age,
+            bio,
+        });
         res.redirect('/');
     },
 ];

@@ -32,6 +32,7 @@
                 id="lastName"
                 value="<%= user.lastName %>"
             />
+            <label for="email">Email:</label>
             <input
                 type="email"
                 name="email"
@@ -39,6 +40,22 @@
                 value="<%= user.email %>"
                 required
             />
+            <label for="age">Age:</label>
+            <input
+                type="number"
+                name="age"
+                id="age"
+                value="<%= user.age ? user.age : '' %>"
+            />
+            <label for="bio">Bio:</label>
+            <textarea
+                name="bio"
+                id="bio"
+                cols="30"
+                rows="10"
+            >
+<%= user.bio ? user.bio : '' %></textarea
+            >
             <button type="submit">Update user</button>
         </form>
         <a href="/">Back to home</a>
