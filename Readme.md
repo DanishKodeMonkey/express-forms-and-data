@@ -2,7 +2,9 @@
 
 This is a basic Express.js application designed to demonstrate how to handle data using forms. It includes routes for creating, updating, and deleting user data, with data stored in a simple in-memory storage class.
 
-This is not intended to be a thorough guide, but rather a breakdown and reference for an initial express setup.
+This is not intended to be a thorough guide, but rather the purpose of this is being a breakdown and reference for an initial express setup.
+
+
 
 # Dependencies
 
