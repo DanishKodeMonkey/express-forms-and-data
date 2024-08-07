@@ -22,6 +22,7 @@ const validateUser = [
         .withMessage(`Last name ${alphaErr}`)
         .isLength({ min: 1, max: 10 })
         .withMessage(`Last name ${lengthErr}`),
+    body('email').trim().isEmail().withMessage('Must be an email'),
 ];
 
 exports.usersListGet = (req, res) => {
@@ -58,7 +59,7 @@ exports.usersCreatePost = [
         // deconstruct validated request body for elements of our user
         const { firstName, lastName } = req.body;
         // call userStorage adduser method, pass our data (see userStorage).
-        usersStorage.addUser({ firstName, lastName });
+        usersStorage.addUser({ firstName, lastName, email });
         // Return to index.
         res.redirect('/');
     },
@@ -88,7 +89,7 @@ exports.usersUpdatePost = [
             });
         }
         const { firstName, lastName } = req.body;
-        usersStorage.updateUser(req.params.id, { firstName, lastName });
+        usersStorage.updateUser(req.params.id, { firstName, lastName, email });
         res.redirect('/');
     },
 ];

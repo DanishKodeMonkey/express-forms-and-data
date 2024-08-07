@@ -16,26 +16,31 @@
             action="/<%= user.id %>/update"
             method="POST"
         >
-        <label for="firstName">First name:</label>
-        <!-- Include user firstname and last name dynamically in value field to auto fill existing data -->
-        <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            
-            value="<%= user.firstName %>"
-            required
-        />
-        <label for="lastName">Last name:</label>
-        <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            value="<%= user.lastName %>"
-        />
-        <button type="submit">Update user</button>
-    </form>
-    <a href="/">Back to home</a>
-    </form>
+            <label for="firstName">First name:</label>
+            <!-- Include user firstname and last name dynamically in value field to auto fill existing data -->
+            <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                value="<%= user.firstName %>"
+                required
+            />
+            <label for="lastName">Last name:</label>
+            <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                value="<%= user.lastName %>"
+            />
+            <input
+                type="email"
+                name="email"
+                id="email"
+                value="<%= user.email %>"
+                required
+            />
+            <button type="submit">Update user</button>
+        </form>
+        <a href="/">Back to home</a>
     </body>
 </html>
