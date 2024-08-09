@@ -25,6 +25,7 @@ This is not intended to be a thorough guide, but rather the purpose of this is b
 -   **Update User**: Form to update an existing user with pre-filled data.
 -   **Delete User**: Button to delete a user with a confirmation prompt.
 -   **List Users**: Displays a list of users with options to update or delete each one.
+-   **Search Users**: Search functionality to find users by first or last name.
 
 # Detailed Breakdown
 
@@ -60,7 +61,8 @@ app.listen(port, () => {
 
 ## views/partials
 
--   A partial for rendering errors occured during validation
+-   **errors.ejs**: A partial for rendering errors occurred during validation.
+-   **search.ejs**: A partial for rendering a search bar to find users by name.
 
 # storages/userStorage.js
 
@@ -110,14 +112,23 @@ const { Router } = require('express');
 const usersController = require('../controller/usersController');
 const usersRouter = Router();
 
+/* list */
 usersRouter.get('/', usersController.usersListGet);
+
+/* create */
 usersRouter.get('/create', usersController.usersCreateGet);
 usersRouter.post('/create', usersController.usersCreatePost);
+
+/* update */
 usersRouter.get('/:id/update', usersController.usersUpdateGet);
 usersRouter.post('/:id/update', usersController.usersUpdatePost);
-usersRouter.post('/:id/delete', usersController.userDeletePost);
 
+/* delete */
+usersRouter.post('/:id/delete');
 module.exports = usersRouter;
+
+/* search */
+usersRouter.get('/search', usersController.userSearchGet);
 ```
 
 # controller/usersController.js
@@ -231,6 +242,28 @@ exports.usersUpdatePost = [
 exports.userDeletePost = (req, res) => {
     usersStorage.deleteUser(req.params.id);
     res.redirect('/');
+};
+
+exports.userSearchGet = (req, res) => {
+    const searchTerm = req.query.name.trim().toLowerCase();
+    const users = usersStorage.getUsers();
+    const results = users.filter(
+        (user) =>
+            user.firstName.toLowerCase().includes(searchTerm) ||
+            user.lastName.toLowerCase().includes(searchTerm)
+    );
+    if (results.length > 0) {
+        res.render('searchResults', {
+            title: 'Search results',
+            users: results,
+        });
+    } else {
+        res.status(404).render('searchResults', {
+            title: 'Search results',
+            users: [],
+            message: '404 - No users found.',
+        });
+    }
 };
 ```
 
