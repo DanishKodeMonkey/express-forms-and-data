@@ -114,6 +114,28 @@ exports.usersUpdatePost = [
     },
 ];
 
+exports.userSearchGet = (req, res) => {
+    const searchTerm = req.query.name.trim().toLowerCase();
+    const users = usersStorage.getUsers();
+    const results = users.filter(
+        (user) =>
+            user.firstName.toLowerCase().includes(searchTerm) ||
+            user.lastName.toLowerCase().includes(searchTerm)
+    );
+    if (results.length > 0) {
+        res.render('searchResults', {
+            title: 'Search results',
+            users: results,
+        });
+    } else {
+        res.status(404).render('searchResults', {
+            title: 'Search results',
+            users: [],
+            message: '404 - No users found.',
+        });
+    }
+};
+
 /* calls pseudo database delete user method, sweet and simple */
 exports.userDeletePost = (req, res) => {
     usersStorage.deleteUser(req.params.id);
